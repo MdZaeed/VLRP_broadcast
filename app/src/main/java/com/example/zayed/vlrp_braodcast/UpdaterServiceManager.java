@@ -38,8 +38,6 @@ public class UpdaterServiceManager extends Service {
     public UpdaterServiceManager() {
     }
 
-    ;
-
     @Override
     public IBinder onBind(Intent intent) {
         // TODO Auto-generated method stub
@@ -49,14 +47,14 @@ public class UpdaterServiceManager extends Service {
     @Override
     public void onCreate() {
         // Code to execute when the service is first created
+        Log.d("Service Started","Yes");
     }
 
     @Override
     public void onDestroy() {
-        if (timer != null) {
-            timer.cancel();
-        }
+        Log.d("Service Destroyed","Yes");
     }
+
     Handler mHandler;
     LocationManager locationManager;
     LocationListener locationListener;
@@ -143,7 +141,8 @@ public class UpdaterServiceManager extends Service {
         }
     };
 
-    public void stopService() {
-        if (timer != null) timer.cancel();
+    @Override
+    public boolean stopService(Intent name) {
+        return super.stopService(name);
     }
 }

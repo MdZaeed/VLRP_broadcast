@@ -1,5 +1,7 @@
 package com.example.zayed.vlrp_braodcast;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,12 +17,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void start(View view) {
+        if(isMyServiceRunning(UpdaterServiceManager.class))
+        {
+            stopService(new Intent(this,UpdaterServiceManager.class));
+        }
         updaterServiceManager=new UpdaterServiceManager(this);
         Intent intent=new Intent(this,updaterServiceManager.getClass());
         startService(intent);
     }
 
     public void stop(View view) {
-        updaterServiceManager.stopService();
+        if(isMyServiceRunning(UpdaterServiceManager.class))
+        {
+            stopService(new Intent(this,UpdaterServiceManager.class));
+        }
+    }
+
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 }
