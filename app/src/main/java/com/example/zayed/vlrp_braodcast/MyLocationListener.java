@@ -1,6 +1,7 @@
 package com.example.zayed.vlrp_braodcast;
 
 import android.content.Context;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -10,9 +11,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 /*---------- Listener class to get coordinates ------------- */
 class MyLocationListener implements LocationListener {
@@ -34,6 +42,21 @@ class MyLocationListener implements LocationListener {
         Log.d("Longitude: ", longitude);
         String latitude = "Latitude: " + loc.getLatitude();
         Log.d("Latitude: ", latitude);
+
+        LocationPost locationPost=new LocationPost(Tools.vehicleid,longitude,latitude);
+
+        ApiAdapter apiAdapter=new ApiAdapter();
+        Call<JSONObject> call=apiAdapter.vlrpApi.locationBroadcast(locationPost);
+        call.enqueue(new Callback<JSONObject>() {
+            @Override
+            public void onResponse(Response<JSONObject> response, Retrofit retrofit) {
+                JSONObject jsonObject=response.body();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+            }
+        });
 
         /*------- To get city name from coordinates -------- */
 /*        String cityName = null;

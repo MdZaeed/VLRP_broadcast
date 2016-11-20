@@ -32,8 +32,9 @@ public class MainActivity extends AppCompatActivity {
         if(isMyServiceRunning(UpdaterServiceManager.class))
         {
             updaterServiceManager=new UpdaterServiceManager(this);
-            Intent intent=new Intent(this,updaterServiceManager.getClass());
-            stopService(intent);        }
+            Intent intent=new Intent(this,UpdaterServiceManager.class);
+            stopService(intent);
+        }
     }
 
     private boolean isMyServiceRunning(Class<?> serviceClass) {

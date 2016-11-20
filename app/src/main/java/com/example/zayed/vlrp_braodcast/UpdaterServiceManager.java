@@ -14,6 +14,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -27,9 +28,9 @@ public class UpdaterServiceManager extends Service {
     /*
         private final int UPDATE_INTERVAL = 60 * 1000;
     */
-    private Timer timer = new Timer();
+/*    private Timer timer = new Timer();
     private static final int NOTIFICATION_EX = 1;
-    private NotificationManager notificationManager;
+    private NotificationManager notificationManager;*/
 
     public UpdaterServiceManager(Context context) {
         this.context = context;
@@ -46,6 +47,16 @@ public class UpdaterServiceManager extends Service {
 
     @Override
     public void onCreate() {
+
+        Intent notificationIntent = new Intent(this, MainActivity.class);
+        PendingIntent pendingIntent=PendingIntent.getActivity(this, 0,
+                notificationIntent, PendingIntent.FLAG_ONE_SHOT);
+
+        Notification notification=new NotificationCompat.Builder(this)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentText("Service is running")
+                .setContentIntent(pendingIntent).build();
+        startForeground(1, notification);
         // Code to execute when the service is first created
         Log.d("Service Started","Yes");
     }
@@ -53,6 +64,9 @@ public class UpdaterServiceManager extends Service {
     @Override
     public void onDestroy() {
         Log.d("Service Destroyed","Yes");
+        stopForeground(true);
+        mStatusChecker=null;
+        stopSelf();
     }
 
     Handler mHandler;
@@ -120,7 +134,7 @@ public class UpdaterServiceManager extends Service {
 
         mStatusChecker.run();
 
-        return START_NOT_STICKY;
+        return START_STICKY;
     }
 
     Runnable mStatusChecker = new Runnable() {
