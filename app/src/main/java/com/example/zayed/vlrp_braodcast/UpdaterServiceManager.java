@@ -134,7 +134,7 @@ public class UpdaterServiceManager extends Service {
 
         mStatusChecker.run();
 
-        return START_STICKY;
+        return START_NOT_STICKY;
     }
 
     Runnable mStatusChecker = new Runnable() {
@@ -147,11 +147,11 @@ public class UpdaterServiceManager extends Service {
                     return;
                 }
                 Log.d("Running","Yes");
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 20000, 10, locationListener);
             } finally {
                 // 100% guarantee that this always happens, even if
                 // your update method throws an exception
-                mHandler.postDelayed(mStatusChecker, 5000);
+                mHandler.postDelayed(mStatusChecker, 20000);
             }
         }
     };

@@ -24,4 +24,7 @@ public interface VlrpApi {
 
     @POST("/api/location")
     Call<JSONObject> locationBroadcast(@Body LocationPost locationPost);
+
+    @GET("/api/location")
+    Call<List<VehicleGetResponse>> locationBroadcast();
 }

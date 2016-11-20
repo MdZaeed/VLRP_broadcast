@@ -38,9 +38,9 @@ class MyLocationListener implements LocationListener {
 /*        Toast.makeText(context,
                 "Location changed: Lat: " + loc.getLatitude() + " Lng: "
                     + loc.getLongitude(), Toast.LENGTH_SHORT).show();*/
-        String longitude = "Longitude: " + loc.getLongitude();
+        String longitude = "" + loc.getLongitude();
         Log.d("Longitude: ", longitude);
-        String latitude = "Latitude: " + loc.getLatitude();
+        String latitude = "" + loc.getLatitude();
         Log.d("Latitude: ", latitude);
 
         LocationPost locationPost=new LocationPost(Tools.vehicleid,longitude,latitude);
@@ -50,13 +50,27 @@ class MyLocationListener implements LocationListener {
         call.enqueue(new Callback<JSONObject>() {
             @Override
             public void onResponse(Response<JSONObject> response, Retrofit retrofit) {
-                JSONObject jsonObject=response.body();
+                Log.d("Yes",response.body().toString());
             }
 
             @Override
             public void onFailure(Throwable t) {
+                Log.d("Yes","Network error");
             }
         });
+/*
+        Call<List<VehicleGetResponse>> call1=apiAdapter.vlrpApi.locationBroadcast();
+        call1.enqueue(new Callback<List<VehicleGetResponse>>() {
+            @Override
+            public void onResponse(Response<List<VehicleGetResponse>> response, Retrofit retrofit) {
+                Log.d("Yes",response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.d("Yes","Network error");
+            }
+        });*/
 
         /*------- To get city name from coordinates -------- */
 /*        String cityName = null;
