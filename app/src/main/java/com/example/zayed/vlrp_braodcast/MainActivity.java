@@ -19,7 +19,9 @@ public class MainActivity extends AppCompatActivity {
     public void start(View view) {
         if(isMyServiceRunning(UpdaterServiceManager.class))
         {
-            stopService(new Intent(this,UpdaterServiceManager.class));
+            updaterServiceManager=new UpdaterServiceManager(this);
+            Intent intent=new Intent(this,updaterServiceManager.getClass());
+            stopService(intent);
         }
         updaterServiceManager=new UpdaterServiceManager(this);
         Intent intent=new Intent(this,updaterServiceManager.getClass());
@@ -29,8 +31,9 @@ public class MainActivity extends AppCompatActivity {
     public void stop(View view) {
         if(isMyServiceRunning(UpdaterServiceManager.class))
         {
-            stopService(new Intent(this,UpdaterServiceManager.class));
-        }
+            updaterServiceManager=new UpdaterServiceManager(this);
+            Intent intent=new Intent(this,updaterServiceManager.getClass());
+            stopService(intent);        }
     }
 
     private boolean isMyServiceRunning(Class<?> serviceClass) {

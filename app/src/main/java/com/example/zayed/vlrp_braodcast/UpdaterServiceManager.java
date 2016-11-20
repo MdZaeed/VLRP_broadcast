@@ -120,7 +120,7 @@ public class UpdaterServiceManager extends Service {
 
         mStatusChecker.run();
 
-        return START_STICKY;
+        return START_NOT_STICKY;
     }
 
     Runnable mStatusChecker = new Runnable() {
@@ -132,6 +132,7 @@ public class UpdaterServiceManager extends Service {
                 {
                     return;
                 }
+                Log.d("Running","Yes");
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
             } finally {
                 // 100% guarantee that this always happens, even if
@@ -143,6 +144,7 @@ public class UpdaterServiceManager extends Service {
 
     @Override
     public boolean stopService(Intent name) {
+        Log.d("Service Stopped","Yes");
         return super.stopService(name);
     }
 }
