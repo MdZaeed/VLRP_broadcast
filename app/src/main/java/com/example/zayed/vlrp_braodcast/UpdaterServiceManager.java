@@ -18,8 +18,15 @@ import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 import java.util.Timer;
 import java.util.TimerTask;
+
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 public class UpdaterServiceManager extends Service {
 
@@ -59,6 +66,20 @@ public class UpdaterServiceManager extends Service {
         startForeground(1, notification);
         // Code to execute when the service is first created
         Log.d("Service Started","Yes");
+
+/*        ApiAdapter apiAdapter=new ApiAdapter();
+        Call<JSONObject> call=apiAdapter.vlrpApi.locationBroadcastForLive("5","23.66","90.54");
+        call.enqueue(new Callback<JSONObject>() {
+            @Override
+            public void onResponse(Response<JSONObject> response, Retrofit retrofit) {
+                Log.d("Yes",response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.d("Yes","Network error");
+            }
+        });*/
     }
 
     @Override

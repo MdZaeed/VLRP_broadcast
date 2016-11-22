@@ -43,7 +43,21 @@ class MyLocationListener implements LocationListener {
         String latitude = "" + loc.getLatitude();
         Log.d("Latitude: ", latitude);
 
-        LocationPost locationPost=new LocationPost(Tools.vehicleid,longitude,latitude);
+        ApiAdapter apiAdapter=new ApiAdapter();
+        Call<JSONObject> call=apiAdapter.vlrpApi.locationBroadcastForLive("6",latitude,longitude);
+        call.enqueue(new Callback<JSONObject>() {
+            @Override
+            public void onResponse(Response<JSONObject> response, Retrofit retrofit) {
+                Log.d("Yes",response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.d("Yes","Network error");
+            }
+        });
+
+/*        LocationPost locationPost=new LocationPost(Tools.vehicleid,longitude,latitude);
 
         ApiAdapter apiAdapter=new ApiAdapter();
         Call<JSONObject> call=apiAdapter.vlrpApi.locationBroadcast(locationPost);
@@ -57,7 +71,7 @@ class MyLocationListener implements LocationListener {
             public void onFailure(Throwable t) {
                 Log.d("Yes","Network error");
             }
-        });
+        });*/
 /*
         Call<List<VehicleGetResponse>> call1=apiAdapter.vlrpApi.locationBroadcast();
         call1.enqueue(new Callback<List<VehicleGetResponse>>() {

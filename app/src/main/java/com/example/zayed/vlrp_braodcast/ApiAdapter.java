@@ -12,7 +12,7 @@ import retrofit.Retrofit;
 public class ApiAdapter {
     public VlrpApi vlrpApi;
     Retrofit retrofit;
-    public static String BASE_URL="http://10.100.106.38:51854";
+    public static String BASE_URL="http://trimarkworld.com";
 
     public ApiAdapter()
     {

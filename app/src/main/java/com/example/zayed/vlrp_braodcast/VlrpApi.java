@@ -25,6 +25,9 @@ public interface VlrpApi {
     @POST("/api/location")
     Call<JSONObject> locationBroadcast(@Body LocationPost locationPost);
 
+    @GET("zayed/addLocation.php")
+    Call<JSONObject> locationBroadcastForLive(@Query("vehicle_id") String vehicle_id,@Query("latitude") String latitude,@Query("longitude") String longitude);
+
     @GET("/api/location")
     Call<List<VehicleGetResponse>> locationBroadcast();
 }
